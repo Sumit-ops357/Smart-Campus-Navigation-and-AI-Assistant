@@ -1,0 +1,179 @@
+/* src/components/Map/LocationPopup.css */
+
+.location-popup-content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 4px;
+  min-width: 250px;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.popup-icon {
+  font-size: 28px;
+}
+
+.popup-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  flex: 1;
+}
+
+.popup-details {
+  margin-bottom: 12px;
+}
+
+.popup-detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.detail-label {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.detail-value {
+  color: #1f2937;
+  font-weight: 600;
+  text-align: right;
+}
+
+.popup-description {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 12px 0;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+/* Show image if present */
+.popup-image {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+}
+
+.popup-amenities {
+  margin: 12px 0;
+}
+
+.amenities-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.amenity-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #e0f2fe;
+  color: #0369a1;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.popup-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-academic {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-facilities {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-sports {
+  background: #fed7aa;
+  color: #92400e;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .location-popup-content {
+    background: #1f2937;
+    color: #f3f4f6;
+  }
+
+  .popup-title,
+  .detail-value {
+    color: #f9fafb;
+  }
+
+  .popup-description {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  .popup-header {
+    border-bottom-color: #374151;
+  }
+
+  .popup-footer {
+    border-top-color: #374151;
+  }
+}
+
+/* Leaflet popup customization */
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 0;
+}
+
+.leaflet-popup-content {
+  margin: 16px;
+  width: auto !important;
+}
+
+.leaflet-popup-tip {
+  background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .leaflet-popup-content-wrapper {
+    background: #1f2937;
+  }
+  .leaflet-popup-tip {
+    background: #1f2937;
+  }
+}
