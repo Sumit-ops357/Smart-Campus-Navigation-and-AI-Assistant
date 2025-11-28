@@ -28,3 +28,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.s*
+.node_modules

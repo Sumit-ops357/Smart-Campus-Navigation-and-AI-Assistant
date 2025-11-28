@@ -6,6 +6,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { campusLocations, campusCenter, categoryColors } from '../../data/campusLocations';
 import LocationPopup from './LocationPopup';
+import RouteDisplay from './RouteDisplay';
+import RouteInfo from '../Navigation/RouteInfo';
 import '../../styles/map.css';
 
 // Fix Leaflet default marker icon issue in React
@@ -33,7 +35,9 @@ const MapViewController = ({ center, zoom }) => {
 };
 
 const CampusMap = ({ selectedLocation, onMarkerClick }) => {
-  const [setActiveMarker] = useState(null);
+  const [startLocation, setStartLocation] = useState(null);
+  const [endLocation, setEndLocation] = useState(null);
+  const [routeInfo, setRouteInfo] = useState(null);
   const mapRef = useRef(null);
 
   // Create custom icon based on category
@@ -54,10 +58,29 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
   };
 
   const handleMarkerClick = (location) => {
-    setActiveMarker(location.id);
+    // Routing selection logic:
+    // 1st click → start, 2nd → end, 3rd → reset start
+    if (!startLocation) {
+      setStartLocation(location);
+      setEndLocation(null);
+      setRouteInfo(null);
+    } else if (!endLocation) {
+      setEndLocation(location);
+    } else {
+      setStartLocation(location);
+      setEndLocation(null);
+      setRouteInfo(null);
+    }
+
     if (onMarkerClick) {
       onMarkerClick(location);
     }
+  };
+
+  const clearRoute = () => {
+    setStartLocation(null);
+    setEndLocation(null);
+    setRouteInfo(null);
   };
 
   return (
@@ -103,6 +126,21 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
             zoom={17}
           />
         )}
+
+        {/* Routing layer */}
+        {startLocation && endLocation && (
+          <RouteDisplay
+            start={{
+              lat: startLocation.coordinates.lat,
+              lng: startLocation.coordinates.lng
+            }}
+            end={{
+              lat: endLocation.coordinates.lat,
+              lng: endLocation.coordinates.lng
+            }}
+            onRouteChange={setRouteInfo}
+          />
+        )}
       </MapContainer>
 
       {/* Map Legend */}
@@ -117,6 +155,15 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
             <span>{category}</span>
           </div>
         ))}
+      </div>
+
+      {/* Route info panel */}
+      <div className="route-info-container">
+        <div className="route-info-status">
+          <div><strong>Start:</strong> {startLocation ? startLocation.name : '-'}</div>
+          <div><strong>End:</strong> {endLocation ? endLocation.name : '-'}</div>
+        </div>
+        <RouteInfo routeInfo={routeInfo} onClear={clearRoute} />
       </div>
     </div>
   );

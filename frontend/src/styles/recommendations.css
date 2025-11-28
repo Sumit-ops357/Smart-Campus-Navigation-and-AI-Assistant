@@ -1,0 +1,75 @@
+.rec-card {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.rec-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.rec-muted {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.rec-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rec-item {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+.rec-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.rec-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-weight: 600;
+}
+
+.rec-rank {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.rec-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.rec-reason {
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.rec-time {
+  font-size: 12px;
+  color: #6b7280;
+}
