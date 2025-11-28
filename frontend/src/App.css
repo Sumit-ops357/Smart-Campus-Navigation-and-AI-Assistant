@@ -362,3 +362,172 @@ body {
 .searchbar-icon {
   font-size: 18px;
 }
+/* Chat floating button */
+.chat-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 90px;
+  z-index: 900;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 26px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.chat-fab:hover {
+  transform: translateY(-1px);
+}
+
+/* Chat window */
+.chat-window {
+  position: absolute;
+  right: 20px;
+  bottom: 90px;
+  width: 320px;
+  max-height: 420px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 950;
+}
+
+.chat-header {
+  padding: 10px 14px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-close-btn {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chat-body {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+  background: #f9fafb;
+}
+
+.chat-input-bar {
+  display: flex;
+  padding: 8px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+  gap: 6px;
+}
+
+.chat-input-bar input {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.chat-input-bar button {
+  border-radius: 999px;
+  border: none;
+  padding: 6px 12px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Chat messages */
+.chat-message {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.chat-message-avatar {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.chat-message-bubble {
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  white-space: pre-wrap;
+}
+
+.chat-message-user .chat-message-bubble {
+  background: #e0f2fe;
+  margin-left: auto;
+}
+
+.chat-message-ai .chat-message-bubble {
+  background: #e5e7eb;
+}
+/* === Compact navbar for all pages === */
+.app-header {
+  padding: 6px 24px;          /* smaller top/bottom padding */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Title + subtitle tighter line-height and no extra margins */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Auth buttons on the right */
+.header-auth {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.header-btn-outline {
+  background: transparent;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+
+
