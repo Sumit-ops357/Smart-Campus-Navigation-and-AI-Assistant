@@ -16,8 +16,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;   /* keep horizontal hidden */
+  overflow-y: auto;     /* allow vertical scrolling */
 }
+
+
+
 
 .app-main {
   display: flex;
@@ -64,12 +68,14 @@ body {
   background: #f9fafd;
   height: 100%;
 }
+
 .sidebar-title {
   font-size: 19px;
   font-weight: 700;
   margin-bottom: 13px;
   color: #1c2340;
 }
+
 .sidebar-note {
   font-size: 13px;
   color: #5a607a;
@@ -86,12 +92,14 @@ body {
   margin-bottom: 11px;
   border-radius: 14px;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(120,130,160,0.03);
+  box-shadow: 0 1px 2px rgba(120, 130, 160, 0.03);
   padding: 0 0 2px 0;
 }
+
 .location-category-group {
   margin-bottom: 14px;
 }
+
 .location-category-header {
   font-size: 15px;
   font-weight: 700;
@@ -100,11 +108,14 @@ body {
   margin-bottom: 2px;
   color: #fff;
   letter-spacing: 0.3px;
-  background: #2563eb; /* Academic (blue) */
+  background: #2563eb;
+  /* Academic (blue) */
 }
+
 .location-category-group:nth-child(2) .location-category-header {
   background: #10b981;
 }
+
 .location-category-group:nth-child(3) .location-category-header {
   background: #f59e0b;
 }
@@ -128,6 +139,7 @@ body {
   border-radius: 0;
   transition: none;
 }
+
 .location-list-item * {
   color: #111 !important;
 }
@@ -166,7 +178,7 @@ body {
   letter-spacing: 0.1px;
   white-space: nowrap;
   word-break: keep-all;
-  box-shadow: 0 2px 2px rgba(60,170,40,0.04);
+  box-shadow: 0 2px 2px rgba(60, 170, 40, 0.04);
 }
 
 .selected-location-info {
@@ -174,6 +186,7 @@ body {
   padding-top: 25px;
   border-top: 2px solid #e4e7ea;
 }
+
 .selected-location-info h3 {
   font-size: 14px;
   font-weight: 600;
@@ -182,6 +195,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
 .location-details-card {
   background: #fafbfc;
   border: 1px solid #e4e7ea;
@@ -189,26 +203,31 @@ body {
   padding: 13px;
   margin-bottom: 10px;
 }
+
 .location-header {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
 }
+
 .location-icon-large {
   font-size: 32px;
 }
+
 .location-header h4 {
   font-size: 17px;
   font-weight: 600;
   color: #2563eb;
   margin-bottom: 2px;
 }
+
 .location-category {
   font-size: 12px;
   color: #10b981;
   font-weight: 500;
 }
+
 .location-description {
   font-size: 14px;
   color: #444e5a;
@@ -216,20 +235,24 @@ body {
   margin-bottom: 12px;
   margin-top: 2px;
 }
+
 .location-meta {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
+
 .meta-item {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
 }
+
 .meta-label {
   color: #6272a4;
   font-weight: 500;
 }
+
 .meta-value {
   color: #1a3a4a;
   font-weight: 600;
@@ -249,11 +272,13 @@ body {
     max-height: 52vh;
     min-width: unset;
     z-index: 999;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   }
+
   .app-main {
     flex-direction: column;
   }
+
   .sidebar-content {
     padding: 10px 5px;
   }
@@ -265,12 +290,14 @@ body {
     background: #16191d;
     color: #e9eef5;
   }
+
   .app-header,
   .app-sidebar,
   .location-details-card,
   .sidebar-content {
     background: #15181b;
   }
+
   .header-title,
   .sidebar-title,
   .location-name,
@@ -278,12 +305,14 @@ body {
   .meta-value {
     color: #f5f5f5;
   }
+
   .header-subtitle,
   .sidebar-note,
   .location-description,
   .meta-label {
     color: #b1b5c3;
   }
+
   .location-list-item,
   .location-list-item:hover,
   .location-list-item-active {
@@ -291,14 +320,17 @@ body {
     color: #fff !important;
     border-bottom: 1px solid #333;
   }
+
   .location-list-item * {
     color: #fff !important;
   }
+
   .location-list-building {
     background: #1b2c14;
     color: #baff97 !important;
   }
 }
+
 /* Search Bar Styles */
 .searchbar {
   margin-bottom: 16px;
@@ -318,7 +350,7 @@ body {
   color: #23292f;
   font-size: 15px;
   font-weight: 500;
-  box-shadow: 0 2px 10px rgba(52,50,90,0.01);
+  box-shadow: 0 2px 10px rgba(52, 50, 90, 0.01);
   transition: border-color 0.14s;
   outline: none;
 }
@@ -335,7 +367,7 @@ body {
   width: 100%;
   background: #fff;
   border-radius: 7px;
-  box-shadow: 0 6px 28px rgba(40,64,120,0.13);
+  box-shadow: 0 6px 28px rgba(40, 64, 120, 0.13);
   z-index: 100;
   padding: 3px 0;
 }
@@ -354,6 +386,7 @@ body {
   cursor: pointer;
   transition: background 0.11s;
 }
+
 .searchbar-item:hover {
   background: #f2f6fd;
   color: #2563eb;
@@ -362,6 +395,7 @@ body {
 .searchbar-icon {
   font-size: 18px;
 }
+
 /* Chat floating button */
 .chat-fab {
   position: absolute;
@@ -476,9 +510,11 @@ body {
 .chat-message-ai .chat-message-bubble {
   background: #e5e7eb;
 }
+
 /* === Compact navbar for all pages === */
 .app-header {
-  padding: 6px 24px;          /* smaller top/bottom padding */
+  padding: 6px 24px;
+  /* smaller top/bottom padding */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -530,4 +566,164 @@ body {
 }
 
 
+/* ====== TOP NAVBAR / APP HEADER ====== */
+
+.app-header {
+  width: 100%;
+  padding: 4px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* nice gradient using your tokens */
+  background: linear-gradient(90deg,
+      var(--color-teal-700),
+      var(--color-teal-500),
+      var(--color-slate-900));
+  color: var(--color-cream-50);
+
+  box-shadow: var(--shadow-md);
+}
+
+/* left side: title + subtitle */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-cream-50);
+}
+
+.header-subtitle {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* right side: auth area */
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-user {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-right: 4px;
+}
+
+/* primary pill button (Login) */
+.header-btn {
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-cream-50);
+  color: var(--color-teal-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: background var(--duration-normal) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-normal) var(--ease-standard);
+}
+
+.header-btn:hover {
+  background: #eef4ff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* outline button (Register / Logout) */
+.header-btn-outline {
+  background: transparent;
+  color: var(--color-cream-50);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.header-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* small responsive tweak */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .header-auth {
+    align-self: flex-end;
+  }
+}
+
+/* ===== HEADER NAV LINKS (Map / Recommendations) ===== */
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 24px;
+}
+
+.header-nav-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.header-nav-link:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.header-nav-link--active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+}
+
+/* Responsive: stack things a bit on small screens */
+@media (max-width: 768px) {
+  .header-nav {
+    margin: 8px 0 0;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-auth {
+    margin-top: 6px;
+    align-self: flex-end;
+  }
+}
+/* Make the recommendations page scroll inside the viewport */
+.recommendations-page {
+  flex: 1;
+  height: calc(100vh - 64px); /* ~ header height, adjust if needed */
+  overflow-y: auto;
+  padding-bottom: 24px;       /* little space at bottom */
+}
+.app-sidebar {
+  background: #f6f6fc;
+}
+
+.route-info {
+  background: #ffffff;
+}
 

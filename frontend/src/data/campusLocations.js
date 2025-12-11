@@ -1,9 +1,9 @@
 // src/data/campusLocations.js
 
 export const campusCenter = {
-  lat: 15.3692,     // Central university location
+  lat: 15.3692, // Central university location
   lng: 75.1217,
-  zoom: 18
+  zoom: 18,
 };
 
 export const campusLocations = [
@@ -18,7 +18,7 @@ export const campusLocations = [
     amenities: ["WiFi", "Library", "Auditorium"],
     icon: "🏢",
     openingHours: "8:00 AM - 8:00 PM",
-    imageUrl: "/images/kle_building01.jpg"
+    imageUrl: "/images/kle_building01.jpg",
   },
   {
     id: 2,
@@ -27,11 +27,12 @@ export const campusLocations = [
     coordinates: { lat: 15.36962, lng: 75.12274 },
     building: "EEE Block",
     floor: "All Floors",
-    description: "Department of Electrical and Electronics Engineering with labs and classrooms.",
+    description:
+      "Department of Electrical and Electronics Engineering with labs and classrooms.",
     amenities: ["Labs", "WiFi"],
     icon: "💡",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building02.jpg"
+    imageUrl: "/images/kle_building02.jpg",
   },
   {
     id: 3,
@@ -44,7 +45,7 @@ export const campusLocations = [
     amenities: ["Workshops"],
     icon: "🚗",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building03.jpg"
+    imageUrl: "/images/kle_building03.jpg",
   },
   {
     id: 4,
@@ -57,7 +58,7 @@ export const campusLocations = [
     amenities: ["Labs", "WiFi"],
     icon: "🏗️",
     openingHours: "8:00 AM - 5:00 PM",
-    imageUrl: "/images/kle_building04.jpg"
+    imageUrl: "/images/kle_building04.jpg",
   },
   {
     id: 5,
@@ -70,7 +71,7 @@ export const campusLocations = [
     amenities: ["Workshop"],
     icon: "⚙️",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building05.jpg"
+    imageUrl: "/images/kle_building05.jpg",
   },
   {
     id: 6,
@@ -83,7 +84,7 @@ export const campusLocations = [
     amenities: ["Lab"],
     icon: "🧪",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building06.jpg"
+    imageUrl: "/images/kle_building06.jpg",
   },
   {
     id: 7,
@@ -96,7 +97,7 @@ export const campusLocations = [
     amenities: ["Lecture Hall"],
     icon: "🏫",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building07.jpg"
+    imageUrl: "/images/kle_building07.jpg",
   },
   {
     id: 8,
@@ -109,7 +110,7 @@ export const campusLocations = [
     amenities: ["Innovation"],
     icon: "🌱",
     openingHours: "9:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building08.jpg"
+    imageUrl: "/images/kle_building08.jpg",
   },
   {
     id: 9,
@@ -122,7 +123,7 @@ export const campusLocations = [
     amenities: ["Labs"],
     icon: "🧬",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building09.jpg"
+    imageUrl: "/images/kle_building09.jpg",
   },
   {
     id: 10,
@@ -135,7 +136,7 @@ export const campusLocations = [
     amenities: ["Stage", "Sound System"],
     icon: "🎤",
     openingHours: "8:00 AM - 8:00 PM",
-    imageUrl: "/images/kle_building10.jpg"
+    imageUrl: "/images/kle_building10.jpg",
   },
   {
     id: 11,
@@ -148,7 +149,7 @@ export const campusLocations = [
     amenities: ["Food", "Beverages"],
     icon: "🍽️",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building11.jpg"
+    imageUrl: "/images/kle_building11.jpg",
   },
   {
     id: 12,
@@ -161,32 +162,51 @@ export const campusLocations = [
     amenities: ["Green Area"],
     icon: "🌳",
     openingHours: "6:00 AM - 7:30 PM",
-    imageUrl: "/images/kle_building12.jpg"
+    imageUrl: "/images/kle_building12.jpg",
   },
   {
     id: 13,
     name: "BVB Post Office",
     category: "Facilities",
-    coordinates: { lat: 15.36930, lng: 75.12192 },
+    coordinates: { lat: 15.3693, lng: 75.12192 },
     building: "Post Office",
     floor: "Ground",
     description: "On-campus post office for students and faculty.",
     amenities: ["Mail Services"],
     icon: "📮",
     openingHours: "10:00 AM - 5:00 PM",
-    imageUrl: "/images/kle_building13.jpg"
+    imageUrl: "/images/kle_building13.jpg",
   },
 ];
 
-export const getLocationById = (id) => campusLocations.find(loc => loc.id === id);
+export const getLocationById = (id) =>
+  campusLocations.find((loc) => loc.id === id);
 
-export const getLocationByName = (name) =>
-  campusLocations.find(loc => loc.name.toLowerCase() === name.toLowerCase());
+/**
+ * Friendlier name lookup:
+ * - case-insensitive
+ * - works with partial names (e.g. "Civil", "civil dept")
+ */
+export const getLocationByName = (name) => {
+  if (!name) return null;
+  const q = name.toLowerCase().trim();
+
+  // exact match
+  const exact = campusLocations.find(
+    (loc) => loc.name.toLowerCase() === q
+  );
+  if (exact) return exact;
+
+  // partial match
+  return campusLocations.find((loc) =>
+    loc.name.toLowerCase().includes(q)
+  );
+};
 
 export const searchLocations = (query) => {
   const lowerQuery = query.toLowerCase();
   return campusLocations.filter(
-    loc =>
+    (loc) =>
       loc.name.toLowerCase().includes(lowerQuery) ||
       loc.description.toLowerCase().includes(lowerQuery) ||
       loc.building.toLowerCase().includes(lowerQuery)
@@ -196,5 +216,5 @@ export const searchLocations = (query) => {
 export const categoryColors = {
   Academic: "#3b82f6",
   Facilities: "#10b981",
-  Sports: "#f59e0b"
+  Sports: "#f59e0b",
 };

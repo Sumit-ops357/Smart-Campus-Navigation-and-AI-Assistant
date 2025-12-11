@@ -5,20 +5,21 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-dotenv.config();
-
+const eventRoutes = require("./routes/eventRoutes");
 const locationRoutes = require("./routes/locationRoutes");
+const recommendationRoutes = require("./routes/recommendationRoutes");
+
 const { register, login } = require("./controllers/authController");
 const { askGemini } = require("./services/aiService");
-const {
-  getSmartSuggestions,
-  getPopularSpots,
-} = require("./services/recommendationService");
+const chatRoutes = require("./routes/chatRoutes");
+
+
+
+dotenv.config();
 
 const app = express();
 
 app.get("/favicon.ico", (req, res) => res.status(204).end());
-
 
 // Middleware
 app.use(express.json());
@@ -37,14 +38,15 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
-// Routes
+// Location routes
 app.use("/api/locations", locationRoutes);
+app.use("/api/chat", chatRoutes);
 
-// Auth routes (no extra file, using key controller)
+// Auth routes
 app.post("/api/auth/register", register);
 app.post("/api/auth/login", login);
 
-// AI chat route (uses backend/src/services/aiService.js)
+// AI chat route
 app.post("/api/ai/chat", async (req, res, next) => {
   try {
     const { message, history } = req.body;
@@ -55,24 +57,9 @@ app.post("/api/ai/chat", async (req, res, next) => {
   }
 });
 
-// Recommendation routes (using backend/src/services/recommendationService.js)
-app.get("/api/recommendations/smart", async (req, res, next) => {
-  try {
-    const data = await getSmartSuggestions();
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-});
-
-app.get("/api/recommendations/popular", async (req, res, next) => {
-  try {
-    const data = await getPopularSpots();
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
-});
+// Recommendation + Events routes
+app.use("/api/recommendations", recommendationRoutes);
+app.use("/api/events", eventRoutes);
 
 // Health
 app.get("/", (req, res) => {

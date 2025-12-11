@@ -1,21 +1,20 @@
 // src/App.jsx
 
 import { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, NavLink } from "react-router-dom";
 import CampusMap from "./components/Map/CampusMap";
 import SearchBar from "./components/Navigation/SearchBar";
 import LocationList from "./components/Navigation/LocationList";
-import ChatInterface from "./components/AI/ChatInterface";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import { campusLocations as staticLocations } from "./data/campusLocations";
 import { fetchLocations } from "./services/locationService";
-
-// ✅ Part 9 components
-import SmartSuggestions from "./components/Recommendations/SmartSuggestions";
-import PopularSpots from "./components/Recommendations/PopularSpots";
+import EventsPage from "./components/Events/EventsPage";
+import RecommendationPage from "./components/Recommendations/RecommendationPage";
+import ChatPage from "./components/AI/ChatPage";
+import SportsPage from "./components/Sports/SportsPage";
 
 function App() {
   const [locations, setLocations] = useState(staticLocations);
@@ -24,7 +23,6 @@ function App() {
 
   const { user, logout } = useAuth();
 
-  // load locations from backend (Part 6)
   useEffect(() => {
     const loadLocations = async () => {
       try {
@@ -54,19 +52,68 @@ function App() {
 
   return (
     <div className="app">
-      {/* Header */}
       <header className="app-header">
         <div className="header-content">
           <h1 className="header-title">🗺️ Smart Campus Navigator</h1>
           <p className="header-subtitle">Find your way around campus easily</p>
         </div>
 
-        {/* Auth area */}
+        <nav className="header-nav">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+            }
+          >
+            Map
+          </NavLink>
+
+          <NavLink
+            to="/recommendations"
+            className={({ isActive }) =>
+              "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+            }
+          >
+            Recommendations
+          </NavLink>
+
+          <NavLink
+            to="/events"
+            className={({ isActive }) =>
+              "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+            }
+          >
+            Events
+          </NavLink>
+
+          <NavLink
+            to="/ai"
+            className={({ isActive }) =>
+              "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+            }
+          >
+            AI Assistant
+          </NavLink>
+
+          <NavLink
+            to="/sports"
+            className={({ isActive }) =>
+              "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+            }
+          >
+            Sports
+          </NavLink>
+        </nav>
+
         <div className="header-auth">
           {user ? (
             <>
               <span className="header-user">Hi, {user.name}</span>
-              <button className="header-btn" onClick={logout}>
+              <button
+                className="header-btn header-btn-outline"
+                onClick={logout}
+              >
                 Logout
               </button>
             </>
@@ -83,13 +130,11 @@ function App() {
         </div>
       </header>
 
-      {/* Routes */}
       <Routes>
         <Route
           path="/"
           element={
             <div className="app-main">
-              {/* Sidebar */}
               <aside className="app-sidebar">
                 <div className="sidebar-content">
                   <h2 className="sidebar-title">Campus Locations</h2>
@@ -111,7 +156,6 @@ function App() {
                     onSelect={handleLocationSelect}
                   />
 
-                  {/* Selected Location Info */}
                   {selectedLocation && (
                     <div className="selected-location-info">
                       <h3>Selected Location</h3>
@@ -147,31 +191,42 @@ function App() {
                       </div>
                     </div>
                   )}
-
-                  {/* ⭐ Part 9 widgets – always visible */}
-                  <SmartSuggestions />
-                  <PopularSpots />
                 </div>
               </aside>
 
-              {/* Map + Chat */}
               <main className="app-map-container">
                 <CampusMap
                   locations={locations}
                   selectedLocation={selectedLocation}
                   onMarkerClick={handleMarkerClick}
                 />
-
-                <ChatInterface
-                  locations={locations}
-                  onNavigateToLocation={handleLocationSelect}
-                />
               </main>
             </div>
           }
         />
 
-        {/* Auth routes */}
+        <Route path="/recommendations" element={<RecommendationPage />} />
+
+        <Route
+          path="/events"
+          element={
+            <EventsPage
+              onGoToLocation={(locId, locName) => {
+                const found =
+                  locations.find((l) => l._id === locId) ||
+                  locations.find((l) => l.name === locName);
+                if (found) {
+                  setSelectedLocation(found);
+                }
+              }}
+            />
+          }
+        />
+
+        <Route path="/ai" element={<ChatPage />} />
+
+        <Route path="/sports" element={<SportsPage />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

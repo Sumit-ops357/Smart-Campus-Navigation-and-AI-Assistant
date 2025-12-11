@@ -1,0 +1,68 @@
+/* src/styles/sports.css */
+
+.sports-page {
+  padding: 32px 40px;
+}
+
+.sports-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.sports-subtitle {
+  margin-bottom: 24px;
+  color: #6b7280;
+}
+
+.sports-section {
+  margin-bottom: 24px;
+}
+
+.sports-card {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.sports-image {
+  width: 260px;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.sports-card-body {
+  flex: 1;
+}
+
+.sports-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.sports-text {
+  margin-bottom: 6px;
+  color: #4b5563;
+}
+
+.sports-list {
+  margin: 6px 0;
+  padding-left: 18px;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .sports-card {
+    flex-direction: column;
+  }
+
+  .sports-image {
+    width: 100%;
+  }
+}
