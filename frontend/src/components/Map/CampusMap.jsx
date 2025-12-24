@@ -67,7 +67,7 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
   const [userCoords, setUserCoords] = useState(null);
 
   const mapRef = useRef(null);
-  const markerRefs = useRef({ }); // keep refs to markers
+  const markerRefs = useRef({}); // keep refs to markers
 
   // Create custom icon based on category
   const createCustomIcon = (location) => {
@@ -187,9 +187,9 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
       setStartLocation((prev) =>
         prev
           ? {
-              ...prev,
-              coordinates: coords,
-            }
+            ...prev,
+            coordinates: coords,
+          }
           : prev
       );
     }
@@ -198,10 +198,14 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
   // When a location is selected from the list, open its popup
   useEffect(() => {
     if (!selectedLocation) return;
+    // We now use a central Modal in App.jsx, so we might NOT want to open the small popup automatically.
+    // Commenting this out to prevent double-visual (Popup + Modal).
+    /*
     const ref = markerRefs.current[selectedLocation.id];
     if (ref && ref.openPopup) {
       ref.openPopup();
     }
+    */
   }, [selectedLocation]);
 
   return (

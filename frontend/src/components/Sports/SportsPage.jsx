@@ -1,93 +1,156 @@
-// src/components/Sports/SportsPage.jsx
-
+import { useState } from "react";
 import "../../styles/sports.css";
 
-const gymkhanaImage =
-  "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg";
-const cricketImage =
-  "https://images.pexels.com/photos/1408899/pexels-photo-1408899.jpeg";
-const courtsImage =
-  "https://images.pexels.com/photos/1408347/pexels-photo-1408347.jpeg";
+const sportsData = [
+  {
+    id: 1,
+    title: "Gymkhana",
+    badge: "Indoor Hub",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+    description:
+      "The central hub for indoor games, fitness activities, and student clubs. Managed by the Physical Education Department.",
+    timings: "6:00 am – 8:30 am & 4:30 pm – 9:00 pm",
+    details:
+      "The Gymkhana is equipped with state-of-the-art equipment for bodybuilding, powerlifting, and general fitness. It also houses table tennis tables, chess boards, and carrom boards for indoor recreation.",
+  },
+  {
+    id: 2,
+    title: "Cricket Playground",
+    badge: "Outdoor Field",
+    image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80",
+    description:
+      "Full-size cricket ground used for university teams, practice nets, and inter-department tournaments.",
+    timings: "6:00 am – 8:00 am & 4:30 pm – 7:00 pm",
+    timingLabel: "Practice Slots",
+    details:
+      "A well-maintained turf wicket primarily used for university matches and inter-college tournaments. Practice nets are available for students during designated slots.",
+  },
+  {
+    id: 3,
+    title: "Outdoor Facilities",
+    badge: "Courts",
+    image: "https://images.unsplash.com/photo-1505666287802-931dc83948e9?auto=format&fit=crop&w=800&q=80",
+    description:
+      "Multiple flood-lit courts available near the Gymkhana for evening practice.",
+    timings: "5:00 pm – 9:00 pm",
+    timingLabel: "General Timings",
+    list: ["Basketball Court (Synthetic)", "Volleyball Courts (Outdoor)"],
+    details:
+      "These courts are flood-lit to allow for evening practice sessions. The basketball court features a synthetic surface for professional-level play, while the volleyball courts are clay-based.",
+  },
+];
 
 export default function SportsPage() {
+  const [selectedSport, setSelectedSport] = useState(null);
+
+  const handleCardClick = (sport) => {
+    setSelectedSport(sport);
+  };
+
+  const closeModal = () => {
+    setSelectedSport(null);
+  };
+
   return (
     <div className="sports-page">
-      <h1 className="sports-title">Campus Sports &amp; Gymkhana</h1>
-      <p className="sports-subtitle">
-        Check timings, playgrounds, and outdoor sports facilities available on
-        campus.
-      </p>
+      <div className="sports-container">
+        <h1 className="sports-title">Campus Sports & Gymkhana</h1>
+        <p className="sports-subtitle">
+          Check timings, playgrounds, and outdoor sports facilities available on
+          campus.
+        </p>
 
-      {/* Gymkhana */}
-      <section className="sports-section">
-        <div className="sports-card">
-          <img src={gymkhanaImage} alt="Gymkhana" className="sports-image" />
-          <div className="sports-card-body">
-            <h2 className="sports-card-title">Gymkhana</h2>
-            <p className="sports-text">
-              The Gymkhana is the central hub for indoor games, fitness
-              activities, and student clubs. It is managed by the Physical
-              Education Department and open to all registered students.
-            </p>
-            <p className="sports-text">
-              <strong>Timings:</strong> 6:00 am – 8:30 am and 4:30 pm – 9:00 pm
-              (Monday to Saturday)
-            </p>
-            <p className="sports-text">
-              <strong>Location:</strong> Near main playground, behind BT
-              Auditorium.
-            </p>
-          </div>
+        <div className="sports-grid">
+          {sportsData.map((sport) => (
+            <div
+              key={sport.id}
+              className="sports-card"
+              onClick={() => handleCardClick(sport)}
+            >
+              <div className="sports-image-wrapper">
+                <img
+                  src={sport.image}
+                  alt={sport.title}
+                  className="sports-image"
+                />
+              </div>
+              <div className="sports-card-body">
+                <span className="sports-card-badge">{sport.badge}</span>
+                <h2 className="sports-card-title">{sport.title}</h2>
+                <p className="sports-text">{sport.description}</p>
+                {sport.list && (
+                  <ul className="sports-list">
+                    {sport.list.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                <div className="sports-card-footer">
+                  <strong>{sport.timingLabel || "Timings"}:</strong>
+                  <span className="sports-highlight">{sport.timings}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
 
-      {/* Cricket ground */}
-      <section className="sports-section">
-        <div className="sports-card">
-          <img
-            src={cricketImage}
-            alt="Cricket playground"
-            className="sports-image"
-          />
-          <div className="sports-card-body">
-            <h2 className="sports-card-title">Cricket Playground</h2>
-            <p className="sports-text">
-              Full-size cricket ground used for university teams, practice nets,
-              and inter-department tournaments.
-            </p>
-            <p className="sports-text">
-              <strong>Student Practice Timings:</strong> 6:00 am – 8:00 am and
-              4:30 pm – 7:00 pm (slots coordinated by the sports office).
-            </p>
-          </div>
-        </div>
-      </section>
+        {/* Detail Modal */}
+        {selectedSport && (
+          <div className="sports-detail-overlay" onClick={closeModal}>
+            <div
+              className="sports-detail-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="sports-detail-close-btn" onClick={closeModal}>
+                &times;
+              </button>
+              <div
+                className="sports-modal-image-wrapper"
+                style={{
+                  backgroundImage: `url(${selectedSport.image})`,
+                }}
+              >
+                <div className="sports-modal-header">
+                  <span className="sports-modal-badge">
+                    {selectedSport.badge}
+                  </span>
+                  <h2 className="sports-modal-title">{selectedSport.title}</h2>
+                </div>
+              </div>
 
-      {/* Outdoor courts */}
-      <section className="sports-section">
-        <div className="sports-card">
-          <img
-            src={courtsImage}
-            alt="Outdoor courts"
-            className="sports-image"
-          />
-          <div className="sports-card-body">
-            <h2 className="sports-card-title">Outdoor Sports Facilities</h2>
-            <p className="sports-text">
-              Multiple flood-lit courts are available near the Gymkhana for
-              evening practice and friendly matches.
-            </p>
-            <ul className="sports-list">
-              <li>Basketball Court (1 full court, synthetic surface)</li>
-              <li>Volleyball Courts (2 outdoor courts)</li>
-            </ul>
-            <p className="sports-text">
-              <strong>General Timings:</strong> 5:00 pm – 9:00 pm (equipment
-              issue from Gymkhana office).
-            </p>
+              <div className="sports-modal-content">
+                <p className="sports-modal-description">
+                  {selectedSport.description}
+                </p>
+
+                {selectedSport.details && (
+                  <p className="sports-modal-details">
+                    {selectedSport.details}
+                  </p>
+                )}
+
+                {selectedSport.list && (
+                  <div className="sports-modal-list-section">
+                    <h4>Facilities Available:</h4>
+                    <ul>
+                      {selectedSport.list.map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="sports-modal-footer">
+                  <h4>{selectedSport.timingLabel || "Timings"}</h4>
+                  <p className="sports-time-highlight">
+                    {selectedSport.timings}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        )}
+      </div>
     </div>
   );
 }

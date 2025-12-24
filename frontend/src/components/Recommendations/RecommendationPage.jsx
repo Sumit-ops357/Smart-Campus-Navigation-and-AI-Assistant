@@ -9,16 +9,19 @@ export default function RecommendationPage() {
     <div className="rec-page">
       <div className="rec-page-inner">
         <div className="rec-page-header">
-          <h2>🎯 Personalized Campus Recommendations</h2>
+          <h2>🎯 Personalized Recommendations</h2>
           <p>
-            These recommendations are powered by your activity and the Gemini
-            API on the backend. Explore where to go next, best times to visit,
+            Powered by your activity and AI analysis. Discover smart suggestions
             and trending spots on campus.
           </p>
         </div>
 
-        <div className="rec-page-grid">
+        {/* 2-Column Layout */}
+        <div className="rec-page-layout">
+          {/* Left Column */}
           <SmartSuggestions />
+
+          {/* Right Column */}
           <PopularSpots />
         </div>
       </div>

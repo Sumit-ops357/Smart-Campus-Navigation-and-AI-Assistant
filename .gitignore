@@ -13,7 +13,7 @@ lerna-debug.log*
 !.env.example   # allow example env file
 
 # Node / Build
-node_modules
+.node_modules
 dist
 dist-ssr
 *.local

@@ -14,11 +14,13 @@ import { fetchLocations } from "./services/locationService";
 import EventsPage from "./components/Events/EventsPage";
 import RecommendationPage from "./components/Recommendations/RecommendationPage";
 import ChatPage from "./components/AI/ChatPage";
+import LocationDetailModal from "./components/Map/LocationDetailModal";
 import SportsPage from "./components/Sports/SportsPage";
 
 function App() {
   const [locations, setLocations] = useState(staticLocations);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // NEW
   const [error, setError] = useState(null);
 
   const { user, logout } = useAuth();
@@ -41,10 +43,12 @@ function App() {
 
   const handleMarkerClick = (location) => {
     setSelectedLocation(location);
+    setIsModalOpen(true); // Open modal on click
   };
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
+    setIsModalOpen(true); // Open modal on select
   };
 
   const activeId =
@@ -140,7 +144,7 @@ function App() {
                   <h2 className="sidebar-title">Campus Locations</h2>
                   <p className="sidebar-note">
                     🕵️‍♂️ Search any building or facility, or click a location to
-                    zoom the map!
+                    view details!
                   </p>
 
                   {error && <p className="sidebar-error">{error}</p>}
@@ -156,41 +160,7 @@ function App() {
                     onSelect={handleLocationSelect}
                   />
 
-                  {selectedLocation && (
-                    <div className="selected-location-info">
-                      <h3>Selected Location</h3>
-                      <div className="location-details-card">
-                        <div className="location-header">
-                          <span className="location-icon-large">
-                            {selectedLocation.icon}
-                          </span>
-                          <div>
-                            <h4>{selectedLocation.name}</h4>
-                            <p className="location-category">
-                              {selectedLocation.category}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="location-description">
-                          {selectedLocation.description}
-                        </p>
-                        <div className="location-meta">
-                          <div className="meta-item">
-                            <span className="meta-label">Building:</span>
-                            <span className="meta-value">
-                              {selectedLocation.building}
-                            </span>
-                          </div>
-                          <div className="meta-item">
-                            <span className="meta-label">Hours:</span>
-                            <span className="meta-value">
-                              {selectedLocation.openingHours}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  {/* NOTE: Sidebar Detail View removed as per request to show "Center Modal" instead */}
                 </div>
               </aside>
 
@@ -201,6 +171,14 @@ function App() {
                   onMarkerClick={handleMarkerClick}
                 />
               </main>
+
+              {/* CENTRAL LOCATION MODAL */}
+              {isModalOpen && selectedLocation && (
+                <LocationDetailModal
+                  location={selectedLocation}
+                  onClose={() => setIsModalOpen(false)}
+                />
+              )}
             </div>
           }
         />
@@ -217,6 +195,7 @@ function App() {
                   locations.find((l) => l.name === locName);
                 if (found) {
                   setSelectedLocation(found);
+                  setIsModalOpen(true);
                 }
               }}
             />

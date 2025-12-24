@@ -18,7 +18,7 @@ export const campusLocations = [
     amenities: ["WiFi", "Library", "Auditorium"],
     icon: "🏢",
     openingHours: "8:00 AM - 8:00 PM",
-    imageUrl: "/images/kle_building01.jpg",
+    imageUrl: "https://images.pexels.com/photos/256490/pexels-photo-256490.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ export const campusLocations = [
     amenities: ["Labs", "WiFi"],
     icon: "💡",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building02.jpg",
+    imageUrl: "https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ export const campusLocations = [
     amenities: ["Workshops"],
     icon: "🚗",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building03.jpg",
+    imageUrl: "https://images.pexels.com/photos/3862632/pexels-photo-3862632.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ export const campusLocations = [
     amenities: ["Labs", "WiFi"],
     icon: "🏗️",
     openingHours: "8:00 AM - 5:00 PM",
-    imageUrl: "/images/kle_building04.jpg",
+    imageUrl: "https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ export const campusLocations = [
     amenities: ["Workshop"],
     icon: "⚙️",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building05.jpg",
+    imageUrl: "https://images.pexels.com/photos/3862627/pexels-photo-3862627.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 6,
@@ -84,7 +84,7 @@ export const campusLocations = [
     amenities: ["Lab"],
     icon: "🧪",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building06.jpg",
+    imageUrl: "https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 7,
@@ -97,7 +97,7 @@ export const campusLocations = [
     amenities: ["Lecture Hall"],
     icon: "🏫",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building07.jpg",
+    imageUrl: "https://images.pexels.com/photos/207691/pexels-photo-207691.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 8,
@@ -110,7 +110,7 @@ export const campusLocations = [
     amenities: ["Innovation"],
     icon: "🌱",
     openingHours: "9:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building08.jpg",
+    imageUrl: "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 9,
@@ -123,7 +123,7 @@ export const campusLocations = [
     amenities: ["Labs"],
     icon: "🧬",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building09.jpg",
+    imageUrl: "https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 10,
@@ -136,7 +136,7 @@ export const campusLocations = [
     amenities: ["Stage", "Sound System"],
     icon: "🎤",
     openingHours: "8:00 AM - 8:00 PM",
-    imageUrl: "/images/kle_building10.jpg",
+    imageUrl: "https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 11,
@@ -149,7 +149,7 @@ export const campusLocations = [
     amenities: ["Food", "Beverages"],
     icon: "🍽️",
     openingHours: "8:00 AM - 6:00 PM",
-    imageUrl: "/images/kle_building11.jpg",
+    imageUrl: "https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 12,
@@ -162,7 +162,7 @@ export const campusLocations = [
     amenities: ["Green Area"],
     icon: "🌳",
     openingHours: "6:00 AM - 7:30 PM",
-    imageUrl: "/images/kle_building12.jpg",
+    imageUrl: "https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     id: 13,
@@ -175,7 +175,7 @@ export const campusLocations = [
     amenities: ["Mail Services"],
     icon: "📮",
     openingHours: "10:00 AM - 5:00 PM",
-    imageUrl: "/images/kle_building13.jpg",
+    imageUrl: "https://images.pexels.com/photos/230554/pexels-photo-230554.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
 ];
 
