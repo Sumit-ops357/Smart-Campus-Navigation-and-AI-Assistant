@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchSmartSuggestions } from "../../services/recommendationService";
+import LocationDetailModal from "../Map/LocationDetailModal";
 import "../../styles/recommendations.css";
 
 export default function SmartSuggestions() {
@@ -20,17 +21,23 @@ export default function SmartSuggestions() {
               id: 'm1',
               name: 'Central Library',
               tag: 'Study Time',
-              imageUrl: 'https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg?auto=compress&cs=tinysrgb&w=600',
+              category: 'Academic',
+              imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbSVthKkyiaw7FIlH7E8iAp1xZS8JdPbN6Fg&s',
               reason: 'It is quiet right now. Perfect for studying.',
-              timeInfo: 'Open until 10 PM'
+              timeInfo: 'Open until 10 PM',
+              building: 'Library Block',
+              description: 'It is quiet right now. Perfect for studying.'
             },
             {
               id: 'm2',
               name: 'Student Canteen',
               tag: 'Lunch Break',
+              category: 'Facilities',
               imageUrl: 'https://images.pexels.com/photos/2696064/pexels-photo-2696064.jpeg?auto=compress&cs=tinysrgb&w=600',
               reason: 'Special menu available today.',
-              timeInfo: 'Closes at 4 PM'
+              timeInfo: 'Closes at 4 PM',
+              building: 'Canteen Block',
+              description: 'Special menu available today.'
             }
           ]);
         }
@@ -42,9 +49,12 @@ export default function SmartSuggestions() {
             id: 'm1',
             name: 'Central Library',
             tag: 'Study Time',
+            category: 'Academic',
             imageUrl: 'https://images.pexels.com/photos/256417/pexels-photo-256417.jpeg?auto=compress&cs=tinysrgb&w=600',
             reason: 'It is quiet right now. Perfect for studying.',
-            timeInfo: 'Open until 10 PM'
+            timeInfo: 'Open until 10 PM',
+            building: 'Library Block',
+             description: 'It is quiet right now. Perfect for studying.'
           }
         ]);
       } finally {
@@ -53,6 +63,20 @@ export default function SmartSuggestions() {
     };
     load();
   }, []);
+
+  const handleCardClick = (item) => {
+      // Map item to location format if necessary, or ensure mock data matches
+      const locationData = {
+          ...item,
+          category: item.category || item.tag || 'Suggestion',
+          openingHours: item.timeInfo || 'See details',
+          description: item.reason || item.description,
+          // meaningful defaults
+          amenities: item.amenities || [],
+          floor: item.floor || 'Ground'
+      };
+      setSelected(locationData);
+  };
 
   return (
     <section>
@@ -73,7 +97,7 @@ export default function SmartSuggestions() {
           <div
             key={item.id || item._id}
             className="rec-card-item"
-            onClick={() => setSelected(item)}
+            onClick={() => handleCardClick(item)}
           >
             {item.imageUrl ? (
               <img
@@ -106,29 +130,10 @@ export default function SmartSuggestions() {
 
       {/* Detail Modal */}
       {selected && (
-        <div className="rec-overlay" onClick={() => setSelected(null)}>
-          <div className="rec-modal" onClick={(e) => e.stopPropagation()}>
-            {selected.imageUrl && (
-              <img
-                src={selected.imageUrl}
-                alt={selected.name}
-                className="rec-modal-image"
-              />
-            )}
-            <div className="rec-modal-content">
-              <h3 className="rec-modal-title">{selected.name}</h3>
-              <p className="rec-modal-text">
-                {selected.reason || selected.description}
-              </p>
-              {selected.locationName && (
-                <p><strong>Location:</strong> {selected.locationName}</p>
-              )}
-            </div>
-            <button className="rec-close-btn" onClick={() => setSelected(null)}>
-              Close
-            </button>
-          </div>
-        </div>
+        <LocationDetailModal 
+            location={selected} 
+            onClose={() => setSelected(null)} 
+        />
       )}
     </section>
   );

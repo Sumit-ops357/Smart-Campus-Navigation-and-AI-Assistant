@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchPopularSpots } from "../../services/recommendationService";
+import LocationDetailModal from "../Map/LocationDetailModal";
 import "../../styles/recommendations.css";
 
 export default function PopularSpots() {
@@ -8,49 +9,48 @@ export default function PopularSpots() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchPopularSpots();
-        if (data && data.length > 0) {
-          setSpots(data);
-        } else {
-          // MOCK DATA
-          setSpots([
-            {
-              id: 'p1',
-              name: 'Main Auditorium',
-              category: 'Event Hall',
-              imageUrl: 'https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=600',
-              visits: 120,
-              description: 'Hosting the annual tech symposium.'
-            },
-            {
-              id: 'p2',
-              name: 'Coffee House',
-              category: 'Cafeteria',
-              imageUrl: 'https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?auto=compress&cs=tinysrgb&w=600',
-              visits: 85,
-              description: 'Best cappuccino on campus.'
-            }
-          ]);
-        }
-      } catch (err) {
-        console.error("Failed to load popular spots", err);
-        setSpots([
-          {
-            id: 'p1',
-            name: 'Main Auditorium',
-            category: 'Event Hall',
-            imageUrl: 'https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=600',
-            visits: 120,
-            description: 'Hosting the annual tech symposium.'
-          }
-        ]);
-      } finally {
-        setLoading(false);
+    // For now, using static data as requested to show Sports Arena and BT Auditorium
+    // const load = async () => {
+    //   try {
+    //     const data = await fetchPopularSpots();
+    //     if (data && data.length > 0) {
+    //       setSpots(data);
+    //     }
+    //   } catch (err) {
+    //     console.error("Failed to load popular spots", err);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+    // load();
+
+    // Direct static data
+    setSpots([
+      {
+        id: 'p1',
+        name: 'BT Auditorium',
+        category: 'Event Hall',
+        imageUrl: 'https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=600',
+        visits: 120,
+        description: 'Hosting the annual tech symposium.',
+        openingHours: '8:00 AM - 8:00 PM',
+        building: 'Auditorium',
+        floor: 'Ground'
+      },
+      {
+        id: 'p2',
+        name: 'Sports Arena',
+        category: 'Sports',
+        imageUrl: 'https://images.pexels.com/photos/2202685/pexels-photo-2202685.jpeg?auto=compress&cs=tinysrgb&w=600',
+        visits: 95,
+        description: 'Indoor facility for badminton, table tennis, and gym.',
+        openingHours: '6:00 AM - 9:00 PM',
+        building: 'Sports Complex',
+        floor: 'Ground',
+        amenities: ["Badminton", "Gym", "Table Tennis"]
       }
-    };
-    load();
+    ]);
+    setLoading(false);
   }, []);
 
   return (
@@ -105,28 +105,10 @@ export default function PopularSpots() {
 
       {/* Detail Modal */}
       {selected && (
-        <div className="rec-overlay" onClick={() => setSelected(null)}>
-          <div className="rec-modal" onClick={(e) => e.stopPropagation()}>
-            {selected.imageUrl && (
-              <img
-                src={selected.imageUrl}
-                alt={selected.name}
-                className="rec-modal-image"
-              />
-            )}
-            <div className="rec-modal-content">
-              <h3 className="rec-modal-title">{selected.name}</h3>
-              <p className="rec-modal-text">
-                {selected.description || "One of the most popular places on campus right now."}
-              </p>
-              <p><strong>Category:</strong> {selected.category}</p>
-              <p><strong>Visits:</strong> {selected.visits}</p>
-            </div>
-            <button className="rec-close-btn" onClick={() => setSelected(null)}>
-              Close
-            </button>
-          </div>
-        </div>
+        <LocationDetailModal
+          location={selected}
+          onClose={() => setSelected(null)}
+        />
       )}
     </section>
   );
