@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const eventRoutes = require("./routes/eventRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const recommendationRoutes = require("./routes/recommendationRoutes");
+const sportsRoutes = require("./routes/sportsRoutes");
 
 const { register, login } = require("./controllers/authController");
 const { askGemini } = require("./services/aiService");
@@ -63,6 +64,7 @@ app.post("/api/ai/chat", async (req, res, next) => {
 // Recommendation + Events routes
 app.use("/api/recommendations", recommendationRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/sports", sportsRoutes);
 
 // Health
 app.get("/", (req, res) => {
