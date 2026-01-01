@@ -29,7 +29,8 @@ const register = async (req, res) => {
     }
 
     // create user (your User schema will hash password if you use pre-save)
-    const user = await User.create({ name, email, password });
+    const isAdmin = req.body.role === "admin";
+    const user = await User.create({ name, email, password, isAdmin });
 
     const token = generateToken(user);
 

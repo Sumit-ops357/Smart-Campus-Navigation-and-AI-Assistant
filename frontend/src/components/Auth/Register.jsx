@@ -8,17 +8,16 @@ import "./Auth.css";
 export default function Register() {
   const navigate = useNavigate();
   const { registerUser } = useAuth();
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", role: "student" });
   const [error, setError] = useState("");
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // clear old error
+    setError("");
 
     const { success, message } = await registerUser(form);
-
     if (!success) {
-      setError(message); // show real backend message
+      setError(message);
       return;
     }
 
@@ -32,34 +31,63 @@ export default function Register() {
     >
       <div className="login-overlay">
         <div className="auth-container login-card">
-          <h2 className="auth-title">Create Account</h2>
+          <h2 className="auth-title">Register</h2>
 
           {error && <p className="auth-error">{error}</p>}
 
           <form onSubmit={handleSubmit} className="auth-form">
-            <label>Name</label>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              required
-            />
+            <div className="input-group">
+              <label>Name</label>
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+              />
+            </div>
 
-            <label>Email</label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-            />
+            <div className="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="yours@university.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+              />
+            </div>
 
-            <label>Password</label>
-            <input
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Create Password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Select Role</label>
+              <div className="role-selector">
+                <button 
+                  type="button"
+                  className={`role-btn ${form.role === 'student' ? 'active' : ''}`}
+                  onClick={() => setForm({ ...form, role: 'student' })}
+                >
+                  Student
+                </button>
+                <button 
+                  type="button"
+                  className={`role-btn ${form.role === 'admin' ? 'active' : ''}`}
+                  onClick={() => setForm({ ...form, role: 'admin' })}
+                >
+                  Admin
+                </button>
+              </div>
+            </div>
 
             <button type="submit" className="auth-btn">
               Create Account

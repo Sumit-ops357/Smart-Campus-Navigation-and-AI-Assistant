@@ -22,6 +22,7 @@ const EventSchema = new mongoose.Schema(
 
     tags: [String],
     rsvpCount: { type: Number, default: 0 },
+    isApproved: { type: Boolean, default: true }, // [NEW] Default for seed data, users set to false
   },
   { timestamps: true }
 );

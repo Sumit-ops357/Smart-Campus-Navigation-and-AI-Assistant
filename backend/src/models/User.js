@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
         createdAt: { type: Date, default: Date.now },
       },
     ],
+    rsvpEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }], // [NEW]
   },
   { timestamps: true }
 );

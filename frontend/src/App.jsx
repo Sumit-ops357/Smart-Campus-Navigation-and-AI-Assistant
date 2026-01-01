@@ -16,6 +16,7 @@ import RecommendationPage from "./components/Recommendations/RecommendationPage"
 import ChatPage from "./components/AI/ChatPage";
 import LocationDetailModal from "./components/Map/LocationDetailModal";
 import SportsPage from "./components/Sports/SportsPage";
+import AdminDashboard from "./components/Admin/AdminDashboard";
 
 function App() {
   const [locations, setLocations] = useState(staticLocations);
@@ -99,6 +100,17 @@ function App() {
           >
             AI Assistant
           </NavLink>
+          
+          {user?.isAdmin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                "header-nav-link" + (isActive ? " header-nav-link--active" : "")
+              }
+            >
+              Dashboard 🛡️
+            </NavLink>
+          )}
 
           <NavLink
             to="/sports"
@@ -205,6 +217,8 @@ function App() {
         <Route path="/ai" element={<ChatPage />} />
 
         <Route path="/sports" element={<SportsPage />} />
+
+        <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -8,14 +8,19 @@ import "./Auth.css";
 export default function Login() {
   const navigate = useNavigate();
   const { loginUser } = useAuth();
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "", role: "student" });
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await loginUser(form);
-    if (!success) return setError("Invalid email or password");
-    navigate("/");
+    const loggedInUser = await loginUser(form);
+    if (!loggedInUser) return setError("Invalid email or password");
+    
+    if (loggedInUser.isAdmin) {
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -30,21 +35,47 @@ export default function Login() {
           {error && <p className="auth-error">{error}</p>}
 
           <form onSubmit={handleSubmit} className="auth-form">
-            <label>Email</label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-            />
+            <div className="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="yours@university.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                required
+              />
+            </div>
 
-            <label>Password</label>
-            <input
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Login As</label>
+              <div className="role-selector">
+                <button 
+                  type="button"
+                  className={`role-btn ${form.role === 'student' ? 'active' : ''}`}
+                  onClick={() => setForm({ ...form, role: 'student' })}
+                >
+                  Student
+                </button>
+                <button 
+                  type="button"
+                  className={`role-btn ${form.role === 'admin' ? 'active' : ''}`}
+                  onClick={() => setForm({ ...form, role: 'admin' })}
+                >
+                  Admin
+                </button>
+              </div>
+            </div>
 
             <button type="submit" className="auth-btn">
               Login

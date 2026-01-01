@@ -29,10 +29,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // 🔹 LOGIN
-  const loginUser = async ({ email, password }) => {
+  const loginUser = async (credentials) => {
     try {
-      const res = await api.post("/api/auth/login", { email, password });
-
+      const res = await api.post("/api/auth/login", credentials);
       const { token, user } = res.data;
 
       setUser(user);
@@ -43,22 +42,18 @@ export const AuthProvider = ({ children }) => {
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      return true;
+      return user; // Return user object for immediate navigation check
     } catch (err) {
       console.error("Login error:", err.response?.data || err.message);
-      return false;
+      return null;
     }
   };
 
   // 🔹 REGISTER  (this is what was missing / wrong)
    // 🔹 REGISTER
-  const registerUser = async ({ name, email, password }) => {
+  const registerUser = async (userData) => {
     try {
-      const res = await api.post("/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      const res = await api.post("/api/auth/register", userData);
 
       console.log("Register success:", res.data);
       return { success: true, data: res.data };

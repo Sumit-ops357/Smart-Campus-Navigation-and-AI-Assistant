@@ -21,8 +21,11 @@ const app = express();
 
 app.get("/favicon.ico", (req, res) => res.status(204).end());
 
+const path = require("path");
+
 // Middleware
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
