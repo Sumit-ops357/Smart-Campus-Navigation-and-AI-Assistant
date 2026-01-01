@@ -8,7 +8,6 @@ const api = axios.create({
   withCredentials: false,
 });
 
-// Get time-aware smart suggestions
 export const fetchSmartSuggestions = async () => {
   try {
     const res = await api.get("/api/recommendations/smart");
@@ -19,7 +18,6 @@ export const fetchSmartSuggestions = async () => {
   }
 };
 
-// Get popular spots
 export const fetchPopularSpots = async () => {
   try {
     const res = await api.get("/api/recommendations/popular");

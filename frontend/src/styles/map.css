@@ -1099,3 +1099,182 @@ select.form-control {
   margin: 0;
   font-size: 0.8rem;
 }
+/* RouteInfo additions */
+.route-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.route-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.route-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.route-field input {
+  margin-top: 0.15rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #d4d4d8;
+  font-size: 0.9rem;
+}
+
+.route-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.route-my-location {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.route-get-btn {
+  padding: 0.5rem 0.9rem;
+}
+.route-step-icon {
+  display: inline-block;
+  width: 1.4rem;
+  text-align: center;
+  margin-right: 0.35rem;
+}
+
+/* Form layout */
+.route-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.route-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.route-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.route-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+.route-input-wrapper {
+  position: relative;
+}
+
+/* Inputs same width, aligned */
+.route-input-wrapper input {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.route-input-wrapper input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+/* Suggestions dropdown */
+.route-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-top: 4px;
+  list-style: none;
+  padding: 4px 0;
+  max-height: 190px;
+  overflow-y: auto;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.route-suggestions li {
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.route-suggestions li:hover {
+  background: #eff6ff;
+}
+
+.route-suggestion-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.route-suggestion-meta {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Actions row */
+.route-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.route-my-location {
+  font-size: 0.8rem;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.route-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.route-get-btn {
+  padding-inline: 1.4rem;
+}
+
+.route-clear-btn {
+  border: none;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Direction step icon (you already partly had this) */
+.route-step-icon {
+  display: inline-block;
+  width: 1.4rem;
+  text-align: center;
+  margin-right: 0.35rem;
+}

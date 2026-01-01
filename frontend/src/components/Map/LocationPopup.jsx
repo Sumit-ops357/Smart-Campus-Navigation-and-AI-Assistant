@@ -6,6 +6,20 @@ import './LocationPopup.css';
 const LocationPopup = ({ location }) => {
   return (
     <div className="location-popup-content">
+      {/* Location Image */}
+      {location.imageUrl && (
+        <div className="popup-image-container">
+          <img
+            src={location.imageUrl}
+            alt={location.name}
+            className="popup-image"
+            onError={(e) => {
+              e.target.style.display = 'none'; // Hide if broken
+            }}
+          />
+        </div>
+      )}
+
       {/* Header with Icon and Name */}
       <div className="popup-header">
         <span className="popup-icon">{location.icon}</span>
@@ -18,19 +32,19 @@ const LocationPopup = ({ location }) => {
           <span className="detail-label">📍 Building:</span>
           <span className="detail-value">{location.building}</span>
         </div>
-        
+
         {location.floor && (
           <div className="popup-detail-item">
             <span className="detail-label">🏢 Floor:</span>
             <span className="detail-value">{location.floor}</span>
           </div>
         )}
-        
+
         <div className="popup-detail-item">
           <span className="detail-label">⏰ Hours:</span>
           <span className="detail-value">{location.openingHours}</span>
         </div>
-        
+
         {location.capacity && (
           <div className="popup-detail-item">
             <span className="detail-label">👥 Capacity:</span>

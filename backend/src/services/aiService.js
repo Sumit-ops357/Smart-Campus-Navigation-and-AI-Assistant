@@ -2,15 +2,25 @@
 
 const axios = require("axios");
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash";
-
 /**
  * Call Google Gemini API with chat history and latest message.
  * history = [{ from: 'user' | 'ai', text: '...' }, ...]
  */
 const askGemini = async (message, history = []) => {
+  // 🔹 Read env variables INSIDE the function (always up-to-date)
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+
+  // Debug log (optional – you can comment this out later)
+  console.log(
+    "[Gemini] KEY present?",
+    !!GEMINI_API_KEY,
+    "| model:",
+    GEMINI_MODEL
+  );
+
   if (!GEMINI_API_KEY) {
+    // Important: callers can detect this and avoid JSON.parse
     return "AI is not configured yet on the server.";
   }
 
