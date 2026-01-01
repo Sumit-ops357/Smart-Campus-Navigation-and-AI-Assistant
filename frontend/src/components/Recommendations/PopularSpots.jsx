@@ -81,7 +81,9 @@ export default function PopularSpots() {
                 className="rec-card-image"
               />
             ) : (
-              <div className="rec-card-image" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>No Image</div>
+              <div className="rec-card-image rec-card-placeholder">
+                <span>📍</span>
+              </div>
             )}
 
             <div className="rec-card-content">

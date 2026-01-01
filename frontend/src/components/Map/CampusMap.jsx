@@ -198,15 +198,14 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
   // When a location is selected from the list, open its popup
   useEffect(() => {
     if (!selectedLocation) return;
-    // We now use a central Modal in App.jsx, so we might NOT want to open the small popup automatically.
-    // Commenting this out to prevent double-visual (Popup + Modal).
-    /*
-    const ref = markerRefs.current[selectedLocation.id];
-    if (ref && ref.openPopup) {
-      ref.openPopup();
-    }
-    */
   }, [selectedLocation]);
+
+  // Effect to handle navigation from external sources (like Events Page)
+  useEffect(() => {
+    if (startLocation?.id === "user-location") {
+      setIsUsingUserLocation(true);
+    }
+  }, [startLocation]);
 
   return (
     <div className="map-wrapper">
@@ -267,7 +266,7 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
         )}
 
         {/* Blue route line */}
-        {startLocation && endLocation && (
+        {startLocation?.coordinates && endLocation?.coordinates && (
           <RouteDisplay
             start={{
               lat: startLocation.coordinates.lat,

@@ -92,37 +92,63 @@ export default function ChatPage() {
 
   return (
     <div className="chat-page">
-      <aside className="chat-sidebar">
+      <aside className="chat-sidebar premium-glass">
         <div className="chat-sidebar-header">
-          <h2>AI Assistant</h2>
+          <div className="sidebar-brand">
+            <span className="brand-icon">🤖</span>
+            <h2>AI Assistant</h2>
+          </div>
         </div>
-        <p className="chat-sidebar-info">
-          Chat with the Smart Campus Assistant and jump to locations on the map.
-        </p>
+        <div className="chat-sidebar-content">
+          <p className="chat-sidebar-info">
+            Your personal campus guide. Ask about locations, events, or sports facilities.
+          </p>
+          <div className="sidebar-features">
+            <div className="feature-pill">📍 Map Navigation</div>
+            <div className="feature-pill">📅 Event Info</div>
+            <div className="feature-pill">🏸 Sports Booking</div>
+          </div>
+        </div>
       </aside>
 
       <main className="chat-main">
-        <div className="chat-main-header">
-          <h2>Smart Campus AI Assistant</h2>
+        <div className="chat-main-header glass-header">
+          <div className="ai-status">
+            <div className="status-dot online"></div>
+            <span>Assistant Online</span>
+          </div>
         </div>
 
-        <div className="chat-main-body">
+        <div className="chat-main-body custom-scrollbar">
           {messages.map((m, idx) => (
             <ChatMessage key={idx} from={m.from} text={m.text} />
           ))}
         </div>
 
-        <form className="chat-input-bar" onSubmit={handleSend}>
-          <input
-            type="text"
-            placeholder="Ask me anything about the campus..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button type="submit" disabled={isSending || !input.trim()}>
-            {isSending ? "…" : "Send"}
-          </button>
-        </form>
+        <div className="chat-input-wrapper">
+          <form className="chat-input-bar floating-pill" onSubmit={handleSend}>
+            <input
+              type="text"
+              placeholder="Type your message..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              autoFocus
+            />
+            <button type="submit" className="send-btn" disabled={isSending || !input.trim()}>
+              {isSending ? (
+                <span className="loader"></span>
+              ) : (
+                <>
+                  <span className="btn-text">Send</span>
+                  <svg className="send-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
       </main>
     </div>
   );

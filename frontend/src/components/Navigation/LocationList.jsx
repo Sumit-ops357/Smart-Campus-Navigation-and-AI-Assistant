@@ -10,10 +10,7 @@ const LocationList = ({
   <div className="location-list">
     {categories.map((cat) => (
       <div key={cat} className="location-category-group">
-        <div
-          className="location-category-header"
-          style={{ background: categoryColors[cat], color: "#fff" }}
-        >
+        <div className="location-category-header">
           {cat}
         </div>
         {campusLocations

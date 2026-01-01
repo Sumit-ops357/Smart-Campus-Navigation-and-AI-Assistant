@@ -3,6 +3,7 @@ import { fetchEvents, rsvpEvent, createEvent, fetchPendingEvents, approveEvent }
 import { useAuth } from "../../context/AuthContext";
 import { useRoute } from "../../context/RouteContext";
 import { useNavigate } from "react-router-dom";
+import { getLocationByName } from "../../data/campusLocations";
 import "../../styles/events.css";
 
 const CATEGORIES = ["All", "Workshop", "Sports", "Cultural", "Tech", "Social"];
@@ -80,8 +81,18 @@ export default function EventsPage({ onGoToLocation }) {
   const handleCreateEvent = async (e) => {
     e.preventDefault();
     try {
+      // Find coordinates for the location if possible
+      const knownLoc = getLocationByName(newEvent.locationName);
+      
       const formData = new FormData();
       Object.keys(newEvent).forEach(key => formData.append(key, newEvent[key]));
+      
+      if (knownLoc) {
+        formData.append("coordinates[lat]", knownLoc.coordinates.lat);
+        formData.append("coordinates[lng]", knownLoc.coordinates.lng);
+        formData.append("locationId", knownLoc.id);
+      }
+
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -117,20 +128,6 @@ export default function EventsPage({ onGoToLocation }) {
     }
   };
 
-  const handleLocateAndRoute = (event) => {
-    setEndLocation({
-      id: event.locationId,
-      name: event.locationName,
-      coordinates: event.coordinates || null,
-    });
-    setStartLocation({
-      id: "user-location",
-      name: "My current location",
-      category: "User",
-      icon: "📍",
-    });
-    navigate("/");
-  };
 
   const getGoogleCalendarUrl = (event) => {
     const start = new Date(event.startTime).toISOString().replace(/-|:|\.\d\d\d/g, "");
@@ -279,9 +276,6 @@ export default function EventsPage({ onGoToLocation }) {
                 </div>
 
                 <div className="modal-footer-actions">
-                  <button className="btn-route" onClick={() => handleLocateAndRoute(selectedEvent)}>
-                    🚀 Navigate to Event
-                  </button>
                   <a 
                     className="btn-calendar" 
                     href={getGoogleCalendarUrl(selectedEvent)} 

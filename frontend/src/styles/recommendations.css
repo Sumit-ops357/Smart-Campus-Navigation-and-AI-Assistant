@@ -1,240 +1,286 @@
 /* src/styles/recommendations.css */
 
 .rec-page {
-  /* Match other pages */
-  height: 100%;
-  overflow-y: auto;
-  background: #f3f4f6;
-  padding: 0;
+  min-height: 100vh;
+  background: #0f172a;
+  color: white;
+  padding: 40px 20px;
+  overflow-x: hidden;
 }
 
 .rec-page-inner {
   max-width: 1400px;
-  /* Wide container */
   margin: 0 auto;
-  padding: 24px;
 }
 
 .rec-page-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 60px;
+  animation: fadeInDown 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .rec-page-header h2 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #1f2937;
-  margin-bottom: 8px;
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.6) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.05em;
 }
 
 .rec-page-header p {
-  color: #6b7280;
-  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.15rem;
   max-width: 700px;
   margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* 2-COLUMN LAYOUT: Left (Smart) vs Right (Popular) */
+/* 2-COLUMN LAYOUT */
 .rec-page-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* Equal split */
-  gap: 32px;
+  gap: 40px;
   align-items: start;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .rec-page-layout {
     grid-template-columns: 1fr;
-    /* Stack on smaller screens */
+    gap: 60px;
   }
 }
 
-/* SECTION HEADER inside columns */
+/* SECTION HEADERS */
 .rec-section-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  /* border-bottom: 2px solid #e5e7eb; Removed border as per preference for cleaner look */
-  padding-bottom: 4px;
+  gap: 12px;
+  padding-left: 8px;
+  position: relative;
 }
 
-/* INTERNAL GRID FOR CARDS (The "Amazon" look within each column) */
+.rec-section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 24px;
+  background: #3b82f6;
+  border-radius: 99px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* CARD GRID */
 .rec-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
 }
 
-/* CARD STYLING */
+/* CARD ITEM - DARK GLASS */
 .rec-card-item {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   cursor: pointer;
-  height: 100%;
+  position: relative;
+}
+
+.rec-card-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .rec-card-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  border-color: #dbeafe;
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.1);
 }
 
 .rec-card-image {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
-  background: #f3f4f6;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.rec-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 3rem;
+}
+
+.rec-card-item:hover .rec-card-image {
+  transform: scale(1.1);
 }
 
 .rec-card-content {
-  padding: 14px;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 }
 
 .rec-card-badge {
   align-self: flex-start;
-  font-size: 10px;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
 }
 
-/* Badge variants */
 .badge-smart {
-  color: #7e22ce;
-  /* Purple */
-  background: #f3e8ff;
+  color: #a855f7;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .badge-popular {
-  color: #c2410c;
-  /* Orange */
-  background: #ffedd5;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.15);
+  border: 1px solid rgba(249, 115, 22, 0.2);
 }
 
 .rec-card-title {
-  font-size: 16px;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 6px;
-  line-height: 1.3;
-  /* limit lines */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: white;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .rec-card-desc {
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.5;
-  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  margin-bottom: 20px;
   flex: 1;
-  /* limit lines */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .rec-card-footer {
-  border-top: 1px solid #f3f4f6;
-  padding-top: 10px;
-  font-size: 12px;
-  color: #4b5563;
-  font-weight: 500;
-}
-
-/* DETAIL MODAL (Reused style idea) */
-.rec-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 16px;
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-  padding: 20px;
+  gap: 8px;
+}
+
+/* EMPTY STATES */
+.rec-empty {
+  padding: 40px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 24px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* ANIMATIONS */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rec-card-item {
+  animation: slideUp 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger indices */
+.rec-card-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.rec-card-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.rec-card-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.rec-card-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* MODAL OVERRIDES (If needed for better contrast in Dark Theme) */
+.rec-overlay {
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
 }
 
 .rec-modal {
-  background: white;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  animation: slideUp 0.3s ease-out;
-}
-
-.rec-modal-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.rec-modal-content {
-  padding: 24px;
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
 }
 
 .rec-modal-title {
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 12px;
-  color: #111;
+  color: white !important;
 }
 
 .rec-modal-text {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #4b5563;
-  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .rec-close-btn {
-  width: 100%;
-  padding: 12px;
-  background: #f3f4f6;
-  border: none;
-  font-weight: 600;
-  color: #374151;
-  cursor: pointer;
-  transition: background 0.2s;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .rec-close-btn:hover {
-  background: #e5e7eb;
-}
-
-/* Empty State */
-.rec-empty {
-  grid-column: 1 / -1;
-  padding: 30px;
-  text-align: center;
-  color: #9ca3af;
-  background: white;
-  border-radius: 12px;
-  border: 1px dashed #e5e7eb;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
