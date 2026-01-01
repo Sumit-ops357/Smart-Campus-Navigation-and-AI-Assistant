@@ -3,148 +3,91 @@
 import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
-import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import "leaflet-routing-machine"; // for L.Routing.osrmv1
 import { extractRouteInfo } from "../../services/routingService";
-
-// --- DEV CLEANUP: filter noisy "Routing error" logs from Leaflet Routing Machine ---
-if (!console._routingPatchedForRouting) {
-  const originalConsoleError = console.error;
-
-  console.error = function (...args) {
-    if (
-      args[0] &&
-      typeof args[0] === "string" &&
-      args[0].startsWith("Routing error:")
-    ) {
-      return; // swallow this specific log
-    }
-    return originalConsoleError.apply(console, args);
-  };
-
-  console._routingPatchedForRouting = true;
-}
-// --- END DEV CLEANUP ---
-
-/* ...rest of your existing RouteDisplay code (patches + component) ... */
-
-/**
- * PATCH leaflet-routing-machine internal methods
- * to avoid noisy console errors like:
- *  - "Cannot read properties of null (reading 'removeLayer')"
- *  - "Cannot read properties of null (reading 'addLayer')"
- *
- * These happen when async routing callbacks fire after the
- * map/control has already been removed by React.
- *
- * We also patch _handleError so it does NOT call console.error.
- */
-if (L.Routing) {
-  // Patch Line._clearLines
-  if (L.Routing.Line && !L.Routing.Line.prototype._patchedClearLines) {
-    const originalClearLines = L.Routing.Line.prototype._clearLines;
-
-    L.Routing.Line.prototype._clearLines = function () {
-      if (!this._map) return; // map already gone → skip
-      return originalClearLines.call(this);
-    };
-
-    L.Routing.Line.prototype._patchedClearLines = true;
-  }
-
-  // Patch Line._addLayer (where _map.addLayer(...) is called)
-  if (L.Routing.Line && !L.Routing.Line.prototype._patchedAddLayer) {
-    const originalAddLayer = L.Routing.Line.prototype._addLayer;
-
-    L.Routing.Line.prototype._addLayer = function (layer) {
-      if (!this._map) return; // map already gone → skip
-      return originalAddLayer.call(this, layer);
-    };
-
-    L.Routing.Line.prototype._patchedAddLayer = true;
-  }
-
-  // Patch Control._clearLines (some versions use this)
-  if (
-    L.Routing.Control &&
-    L.Routing.Control.prototype &&
-    !L.Routing.Control.prototype._patchedClearLines
-  ) {
-    const originalCtrlClearLines = L.Routing.Control.prototype._clearLines;
-
-    if (originalCtrlClearLines) {
-      L.Routing.Control.prototype._clearLines = function () {
-        if (!this._line || !this._line._map) return;
-        return originalCtrlClearLines.call(this);
-      };
-    }
-
-    L.Routing.Control.prototype._patchedClearLines = true;
-  }
-
-  // Patch Control._handleError so it doesn't spam console.error
-  if (
-    L.Routing.Control &&
-    L.Routing.Control.prototype &&
-    !L.Routing.Control.prototype._patchedHandleError
-  ) {
-    // We simply swallow the error; UI already handles failures gracefully.
-    L.Routing.Control.prototype._handleError = function () {
-      // no-op: prevent default console.error("Routing error", ...)
-    };
-
-    L.Routing.Control.prototype._patchedHandleError = true;
-  }
-}
-// --- END PATCH ---
 
 const RouteDisplay = ({ start, end, onRouteChange }) => {
   const map = useMap();
-  const controlRef = useRef(null);
+  const lineRef = useRef(null);
+  const xhrRef = useRef(null);
 
   useEffect(() => {
     if (!map) return;
 
-    // Remove previous routing control when start/end change
-    if (controlRef.current) {
-      map.removeControl(controlRef.current);
-      controlRef.current = null;
+    let cancelled = false;
+
+    // remove old line
+    if (lineRef.current) {
+      map.removeLayer(lineRef.current);
+      lineRef.current = null;
     }
 
-    if (!start || !end) return;
+    if (!start || !end) {
+      if (onRouteChange) onRouteChange(null);
+      return;
+    }
 
-    const control = L.Routing.control({
-      waypoints: [
-        L.latLng(start.lat, start.lng),
-        L.latLng(end.lat, end.lng),
-      ],
-      routeWhileDragging: false,
-      addWaypoints: false,
-      draggableWaypoints: false,
-      show: false, // hide default panel
-      lineOptions: {
-        addWaypoints: false,
-        extendToWaypoints: true,
-        missingRouteTolerance: 10,
-      },
-    })
-      .on("routesfound", (e) => {
-        const [route] = e.routes;
-        const info = extractRouteInfo(route);
-        if (onRouteChange) onRouteChange(info);
-      })
-      .addTo(map);
+    const router = L.Routing.osrmv1({
+      serviceUrl: "https://router.project-osrm.org/route/v1",
+    });
 
-    controlRef.current = control;
+    const waypoints = [
+      L.Routing.waypoint(L.latLng(start.lat, start.lng)),
+      L.Routing.waypoint(L.latLng(end.lat, end.lng)),
+    ];
 
-    // Cleanup when component unmounts or deps change
+    const xhr = router.route(waypoints, (err, routes) => {
+      if (cancelled) return;
+
+      if (err || !routes || !routes.length) {
+        console.error("Routing error:", err);
+        if (onRouteChange) onRouteChange(null);
+        return;
+      }
+
+      const route = routes[0];
+
+      if (lineRef.current) {
+        map.removeLayer(lineRef.current);
+        lineRef.current = null;
+      }
+
+      const latlngs = route.coordinates.map((c) =>
+        L.latLng(c.lat, c.lng)
+      );
+
+      // 🔵 Blue route line
+      const polyline = L.polyline(latlngs, {
+        color: "#1d4ed8",
+        weight: 7,
+        opacity: 0.95,
+      }).addTo(map);
+
+      lineRef.current = polyline;
+
+      const info = extractRouteInfo(route);
+      if (onRouteChange) onRouteChange(info);
+    });
+
+    xhrRef.current = xhr;
+
     return () => {
-      if (controlRef.current) {
-        map.removeControl(controlRef.current);
-        controlRef.current = null;
+      cancelled = true;
+
+      if (xhrRef.current && typeof xhrRef.current.abort === "function") {
+        try {
+          xhrRef.current.abort();
+        } catch {
+          // ignore
+        }
+      }
+
+      if (lineRef.current) {
+        map.removeLayer(lineRef.current);
+        lineRef.current = null;
       }
     };
-  }, [map, start, end, onRouteChange]);
+  }, [map, start?.lat, start?.lng, end?.lat, end?.lng, onRouteChange]);
 
   return null;
 };
