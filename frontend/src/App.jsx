@@ -58,9 +58,12 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <div className="header-content">
-          <h1 className="header-title">🗺️ Smart Campus Navigator</h1>
-          <p className="header-subtitle">Find your way around campus easily</p>
+        <div className="header-logo-box">
+          <div className="logo-icon">🗺️</div>
+          <div className="header-content">
+            <h1 className="header-title">Smart Campus Navigator</h1>
+            <p className="header-subtitle">Find your way around campus easily</p>
+          </div>
         </div>
 
         <nav className="header-nav">
