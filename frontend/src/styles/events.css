@@ -156,6 +156,37 @@
   padding: 0 40px;
 }
 
+@media (max-width: 768px) {
+  .events-hero {
+    padding: 60px 20px;
+  }
+
+  .events-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .events-container {
+    padding: 0 16px;
+  }
+
+  .events-list {
+    grid-template-columns: 1fr;
+    /* Stack cards */
+  }
+
+  .modal-title {
+    font-size: 1.8rem;
+  }
+
+  .modal-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .section-title {
   font-size: 2rem;
   font-weight: 800;

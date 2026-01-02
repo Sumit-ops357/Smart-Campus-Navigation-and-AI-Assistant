@@ -14,6 +14,10 @@ export async function fetchMyBookings(token) {
   const res = await fetch(`${API_BASE}/api/sports/bookings`, {
     headers: getHeaders(token)
   });
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("Unauthorized");
+    throw new Error("Failed to fetch bookings");
+  }
   return res.json();
 }
 

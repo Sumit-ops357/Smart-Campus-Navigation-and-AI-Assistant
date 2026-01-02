@@ -1083,36 +1083,45 @@ select.form-control {
 /* Mobile Portrait Responsive */
 @media (max-width: 480px) {
   .map-legend {
-    bottom: var(--space-8);
+    top: var(--space-8);
     right: var(--space-8);
-    padding: var(--space-8) var(--space-10);
-    min-width: 100px;
+    left: var(--space-8);
+    bottom: auto;
+    width: auto;
+    max-width: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-8) var(--space-12);
+    min-width: 0;
+    overflow-x: auto;
   }
 
   .legend-title {
-    font-size: var(--font-size-xs);
-    margin-bottom: var(--space-6);
+    display: none;
+    /* Save space */
   }
 
   .legend-item {
     font-size: var(--font-size-xs);
-    margin-bottom: var(--space-4);
-    gap: var(--space-6);
+    margin-bottom: 0;
+    margin-right: 12px;
+    white-space: nowrap;
   }
 
   .legend-color {
-    width: var(--space-10);
-    height: var(--space-10);
+    width: 8px;
+    height: 8px;
   }
 
   .marker-container {
-    width: var(--space-24);
-    height: var(--space-24);
+    width: 32px;
+    height: 32px;
     border-width: 2px;
   }
 
   .marker-emoji {
-    font-size: var(--font-size-base);
+    font-size: 14px;
   }
 }
 
@@ -1417,4 +1426,25 @@ select.form-control {
 .route-step-icon {
   margin-right: 8px;
   color: #3b82f6;
+}
+
+/* Mobile adjustments for Route Info */
+@media (max-width: 768px) {
+  .route-info-container {
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px 24px 0 0;
+    padding: 20px;
+    max-height: 50vh;
+    /* Allow it to take up to half screen */
+    overflow-y: auto;
+    /* Scroll internally if needed */
+  }
+
+  .leaflet-control-zoom {
+    display: none;
+    /* Hide zoom controls on mobile to clear clutter */
+  }
 }

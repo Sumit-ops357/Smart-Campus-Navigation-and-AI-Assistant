@@ -25,16 +25,18 @@ export default function SportsPage() {
     try {
       if (activeTab === "facilities") {
         const data = await sportsService.fetchFacilities();
-        setFacilities(data);
+        setFacilities(Array.isArray(data) ? data : []);
       } else if (activeTab === "my-bookings") {
         const data = await sportsService.fetchMyBookings(token);
-        setBookings(data);
+        setBookings(Array.isArray(data) ? data : []);
       } else if (activeTab === "playmates") {
         const data = await sportsService.fetchPlaymateRequests();
-        setPlaymates(data);
+        setPlaymates(Array.isArray(data) ? data : []);
       }
     } catch (err) {
       console.error("Failed to load sports data", err);
+      // Optional: Add a toast notification here
+      if (activeTab === "my-bookings") setBookings([]); // Safe fallback
     } finally {
       setLoading(false);
     }
