@@ -71,18 +71,25 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
 
   // Create custom icon based on category
   const createCustomIcon = (location) => {
-    const color = categoryColors[location.category] || "#33808d";
+    const isSelected =
+      startLocation?.id === location.id || endLocation?.id === location.id;
+    const categoryClass = location.category.toLowerCase();
 
     return L.divIcon({
       className: "custom-marker-icon",
       html: `
-        <div class="marker-container" style="background-color: ${color}">
-          <span class="marker-emoji">${location.icon}</span>
+        <div class="marker-pin-wrapper ${categoryClass} ${
+        isSelected ? "is-selected" : ""
+      }">
+          <div class="marker-pulse"></div>
+          <div class="marker-container">
+            <span class="marker-emoji">${location.icon}</span>
+          </div>
         </div>
       `,
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-      popupAnchor: [0, -40],
+      iconSize: [40, 48],
+      iconAnchor: [20, 48],
+      popupAnchor: [0, -48],
     });
   };
 
@@ -230,14 +237,16 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
           <UserLocationTracker onMove={handleUserMove} />
         )}
 
-        {/* Campus markers */}
-        {campusLocations.map((location) => (
-          <Marker
-            key={location.id}
-            position={[
-              location.coordinates.lat,
-              location.coordinates.lng,
-            ]}
+        {campusLocations.map((location) => {
+          const isSelected =
+            startLocation?.id === location.id || endLocation?.id === location.id;
+          return (
+            <Marker
+              key={`${location.id}-${isSelected}`}
+              position={[
+                location.coordinates.lat,
+                location.coordinates.lng,
+              ]}
             icon={createCustomIcon(location)}
             eventHandlers={{
               click: () => handleMarkerClick(location),
@@ -251,8 +260,9 @@ const CampusMap = ({ selectedLocation, onMarkerClick }) => {
             <Popup maxWidth={300} className="location-popup">
               <LocationPopup location={location} />
             </Popup>
-          </Marker>
-        ))}
+            </Marker>
+          );
+        })}
 
         {/* External focus from search list */}
         {selectedLocation && (
