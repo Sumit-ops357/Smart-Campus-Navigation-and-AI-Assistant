@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { fetchAdminEvents, approveEvent } from "../../services/eventService";
+import { getBackendUrl } from "../../config/apiConfig";
 import { useNavigate } from "react-router-dom";
 import "../../styles/admin.css";
 
@@ -146,7 +147,7 @@ export default function AdminDashboard() {
                       <td>
                         <div className="event-cell">
                           {ev.imageUrl ? (
-                            <img className="event-mini-img" src={ev.imageUrl.startsWith('http') ? ev.imageUrl : `${(import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "")}${ev.imageUrl}`} alt="" />
+                            <img className="event-mini-img" src={getBackendUrl(ev.imageUrl)} alt="" />
                           ) : (
                             <div className="event-mini-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>📅</div>
                           )}

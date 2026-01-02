@@ -1,7 +1,6 @@
-// frontend/src/services/aiService.js
-import axios from "axios";
+import { API_BASE } from "../config/apiConfig";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = API_BASE;
 
 /**
  * Send a chat message to backend AI endpoint.

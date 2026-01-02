@@ -1,9 +1,9 @@
-// src/services/locationService.js
+import { API_BASE } from "../config/apiConfig";
 
 // 👉 named export: fetchLocations
 export const fetchLocations = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/locations");
+    const res = await fetch(`${API_BASE}/api/locations`);
     if (!res.ok) {
       throw new Error("Failed to fetch locations");
     }

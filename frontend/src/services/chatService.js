@@ -1,5 +1,4 @@
-// frontend/src/services/chatService.js
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { API_BASE } from "../config/apiConfig";
 
 function authHeaders() {
   // read token from scn_token

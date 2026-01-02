@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useRoute } from "../../context/RouteContext";
 import { useNavigate } from "react-router-dom";
 import { getLocationByName } from "../../data/campusLocations";
+import { getBackendUrl } from "../../config/apiConfig";
 import "../../styles/events.css";
 
 const CATEGORIES = ["All", "Workshop", "Sports", "Cultural", "Tech", "Social"];
@@ -193,11 +194,7 @@ export default function EventsPage({ onGoToLocation }) {
                 {ev.imageUrl ? (
                   <img
                     className="event-image"
-                      src={
-                        ev.imageUrl.startsWith("http")
-                          ? ev.imageUrl
-                          : `${(import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "")}${ev.imageUrl}`
-                      }
+                      src={getBackendUrl(ev.imageUrl)}
                     alt={ev.title}
                   />
                 ) : (
@@ -240,7 +237,7 @@ export default function EventsPage({ onGoToLocation }) {
             <div className="modal-body">
               <div className="modal-sidebar">
                 {selectedEvent.imageUrl ? (
-                   <img src={selectedEvent.imageUrl.startsWith("http") ? selectedEvent.imageUrl : `${(import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "")}${selectedEvent.imageUrl}`} alt={selectedEvent.title} />
+                   <img src={getBackendUrl(selectedEvent.imageUrl)} alt={selectedEvent.title} />
                 ) : (
                   <div className="modal-image-placeholder">📅</div>
                 )}

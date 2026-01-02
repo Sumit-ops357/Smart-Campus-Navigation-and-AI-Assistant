@@ -4,8 +4,7 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 
-// Backend base URL (from .env or fallback)
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { API_BASE } from "../config/apiConfig";
 
 // one axios instance we can reuse
 const api = axios.create({
